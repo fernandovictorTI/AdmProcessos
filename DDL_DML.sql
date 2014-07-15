@@ -15,7 +15,7 @@ INSERT INTO Categoria (Id,Descricao) VALUES (3,'Processo Trabalhista')
 --------------------- Tabela Interessado
 
 CREATE TABLE Interessado(
-	Id int not null,
+	Id int identity(1,1),
 	Nome varchar(100) not null,
 	Cpf numeric(11) not null unique,
 	Contatos varchar(100),
@@ -25,7 +25,7 @@ CREATE TABLE Interessado(
 
 --------------------- Tabela Processo
 CREATE TABLE Processo(
-	Numero varchar(10) not null unique,
+	Numero int identity(0000000001,1) not null unique,
 	Categoria int not null,
 	Interessado int not null,
 	Data_Julgamento datetime,
