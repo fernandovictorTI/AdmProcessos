@@ -14,7 +14,7 @@ INSERT INTO Categoria (Id,Descricao) VALUES (3,'Processo Trabalhista')
 
 --------------------- Tabela Interessado
 
-CREATE TABLE Interressado(
+CREATE TABLE Interessado(
 	Id int not null,
 	Nome varchar(100) not null,
 	Cpf numeric(11) not null unique,
@@ -33,6 +33,6 @@ CREATE TABLE Processo(
 	Descricao text,
 	primary key (Numero),
 	foreign key (Categoria) references Categoria (Id),
-	foreign key (Interessado) references Interressado (Id)
+	foreign key (Interessado) references Interessado (Id)
 )
 
