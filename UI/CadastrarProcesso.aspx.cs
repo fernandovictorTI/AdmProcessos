@@ -22,23 +22,53 @@ namespace ProvaAdmProcessos
         {
             if (!IsPostBack)
             {
+<<<<<<< HEAD
                 this.PreencherCampos();
                 this.CarregarCampos();
             }
+=======
+                this.CarregarCampos();
+
+                if (Request.Params["modo"] == "editar")
+                {
+                    int numero = Convert.ToInt32(Request.Params["idProcesso"]);
+                    this.PreencherCampos(numero);
+                    btnCadastrarProcesso.Text = "Alterar";
+                }
+            }           
+>>>>>>> funcionalidade_filtrar
 
         }
 
         #region Metodos
 
+<<<<<<< HEAD
         private void PreencherCampos()
         {
             BusCadastrarProcesso busCadastrarProcesso = new BusCadastrarProcesso();
             this.LstCategoria = busCadastrarProcesso.ListarCategoria();
             this.LstInteressado = busCadastrarProcesso.ListarInteressado();
+=======
+        private void PreencherCampos(int numero)
+        {
+            var processo = new BusCadastrarProcesso().RetornarProcesso(numero);
+            txtNumero.Text = processo.Numero.ToString();
+            ddlCategoria.SelectedIndex = ddlCategoria.Items.IndexOf(ddlCategoria.Items.FindByValue(processo.Categoria.ToString()));
+            ddlInteressado.SelectedIndex = ddlInteressado.Items.IndexOf(ddlInteressado.Items.FindByValue(processo.Interessado.ToString()));
+            txtDataJulgamento.Text = processo.DataJulgamento.ToString();
+            txtValorAcao.Text = processo.ValorAcao.ToString();
+            txtDescricao.Text = processo.Descricao;
+>>>>>>> funcionalidade_filtrar
         }
 
         private void CarregarCampos()
         {
+<<<<<<< HEAD
+=======
+            BusCadastrarProcesso busCadastrarProcesso = new BusCadastrarProcesso();
+            this.LstCategoria = busCadastrarProcesso.ListarCategoria();
+            this.LstInteressado = busCadastrarProcesso.ListarInteressado();
+>>>>>>> funcionalidade_filtrar
             this.ListarCategoria();
             this.ListarInteressado();
         }
@@ -69,8 +99,15 @@ namespace ProvaAdmProcessos
             {
                 if (this.ValidarCampos() == 0)
                 {
+<<<<<<< HEAD
                     Processo processo = new Processo();
                     processo.Numero = Convert.ToInt32(txtNumero.Text);
+=======
+                    int? num = null;
+
+                    Processo processo = new Processo();
+                    processo.Numero = txtNumero.Text != string.Empty ? Convert.ToInt32(txtNumero.Text) : num;
+>>>>>>> funcionalidade_filtrar
                     processo.Categoria = Convert.ToInt32(ddlCategoria.SelectedItem.Value);
                     processo.Interessado = Convert.ToInt32(ddlInteressado.SelectedItem.Value);
                     processo.DataJulgamento = Convert.ToDateTime(txtDataJulgamento.Text);
@@ -78,7 +115,19 @@ namespace ProvaAdmProcessos
                     processo.Descricao = txtDescricao.Text;
 
                     BusCadastrarProcesso busCadastrarProcesso = new BusCadastrarProcesso();
+<<<<<<< HEAD
                     busCadastrarProcesso.CadastrarProcesso(processo);
+=======
+
+                    if (processo.Numero == null)
+                    {
+                        busCadastrarProcesso.CadastrarProcesso(processo);
+                    }
+                    else
+                    {
+                        busCadastrarProcesso.AlterarProcesso(processo);
+                    }
+>>>>>>> funcionalidade_filtrar
 
                     calSucces.Visible = true;
                     calDanger.Visible = false;

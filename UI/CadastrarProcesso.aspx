@@ -11,7 +11,11 @@
 </head>
 <body>
     <form id="form1" runat="server">
+<<<<<<< HEAD
         <div class="container-fluid">
+=======
+        <div class="container">
+>>>>>>> funcionalidade_filtrar
             <br />
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -27,7 +31,11 @@
                         </div>
                         <div class="form-group">
                             <label>Número</label>
+<<<<<<< HEAD
                             <asp:TextBox ID="txtNumero" runat="server" CssClass="form-control"></asp:TextBox>
+=======
+                            <asp:TextBox ID="txtNumero" runat="server" CssClass="form-control" Enabled="false"></asp:TextBox>
+>>>>>>> funcionalidade_filtrar
                         </div>
                         <div class="form-group">
                             <label>Categoria</label><br />

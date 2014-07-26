@@ -1,5 +1,9 @@
 ﻿using Entidade;
 using System;
+<<<<<<< HEAD
+=======
+using System.Collections;
+>>>>>>> funcionalidade_filtrar
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -81,7 +85,10 @@ namespace DataAccess
                     (@categoria,@interessado,@dataJulgamento,@valorAcao,@descricao)";
                 SqlCommand cmd = new SqlCommand(sql, Conn);
 
+<<<<<<< HEAD
                 //cmd.Parameters.AddWithValue("@numero", processo.Numero);
+=======
+>>>>>>> funcionalidade_filtrar
                 cmd.Parameters.AddWithValue("@categoria", processo.Categoria);
                 cmd.Parameters.AddWithValue("@interessado", processo.Interessado);
                 cmd.Parameters.AddWithValue("@dataJulgamento", processo.DataJulgamento);
@@ -96,7 +103,11 @@ namespace DataAccess
             }
         }
 
+<<<<<<< HEAD
         public List<Processo> ListarProcessos()
+=======
+        public List<Processo> ListarProcessos(Hashtable ht)
+>>>>>>> funcionalidade_filtrar
         {
             var lstProcesso = new List<Processo>();
             SqlDataReader rdr = null;
@@ -107,8 +118,21 @@ namespace DataAccess
                 sql = @"select p.Numero, c.Descricao,i.Nome, p.Data_Julgamento from processo p
                     inner join Categoria c on c.Id = p.Categoria
                     inner join Interessado i on i.Id = p.Interessado";
+<<<<<<< HEAD
 
                 SqlCommand cmd = new SqlCommand(sql, Conn);
+=======
+                SqlCommand cmd = new SqlCommand();
+
+                if (ht.ContainsKey("CATEGORIA") && Convert.ToInt32(ht["CATEGORIA"])>0)
+                {
+                    sql = string.Concat(sql, " and c.Id = @Categoria");
+                    cmd.Parameters.AddWithValue("Categoria",Convert.ToInt32(ht["CATEGORIA"]));
+                }
+
+                cmd.CommandText = sql;
+                cmd.Connection = Conn;
+>>>>>>> funcionalidade_filtrar
 
                 rdr = cmd.ExecuteReader();
                 while (rdr.Read())
@@ -127,5 +151,83 @@ namespace DataAccess
                 throw;
             }
         }
+<<<<<<< HEAD
+=======
+
+        public Processo RetornarProcesso(int numero)
+        {
+            Processo processo = new Processo();
+            SqlDataReader rdr = null;
+            string sql = string.Empty;
+
+            try
+            {
+                sql = "select * from processo where numero = @numero";
+                SqlCommand cmd = new SqlCommand(sql, this.Conn);
+                cmd.Parameters.AddWithValue("@numero", numero);
+
+                rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    processo.Numero = Convert.ToInt32(rdr["Numero"].ToString());
+                    processo.Categoria = Convert.ToInt32(rdr["Categoria"].ToString());
+                    processo.Interessado = Convert.ToInt32(rdr["Interessado"].ToString());
+                    processo.DataJulgamento = Convert.ToDateTime(rdr["Data_Julgamento"]);
+                    processo.ValorAcao = Convert.ToInt32(rdr["Valor_Acao"].ToString());
+                    processo.Descricao = rdr["Descricao"].ToString();
+                }
+
+                return processo;
+            }
+            catch (Exception)
+            {                
+                throw;
+            }
+        }
+
+        public void Alterar(Processo processo)
+        {
+            string sql = string.Empty;
+
+            try
+            {
+                sql = @"update processo set Categoria = @categoria, Interessado = @interessado, Data_Julgamento = @dataJulgamento,
+                    Valor_Acao = @valorAcao, Descricao = @descricao where Numero = @numero";
+                SqlCommand cmd = new SqlCommand(sql, Conn);
+
+                cmd.Parameters.AddWithValue("@numero", Convert.ToInt32(processo.Numero));
+                cmd.Parameters.AddWithValue("@categoria", processo.Categoria);
+                cmd.Parameters.AddWithValue("@interessado", processo.Interessado);
+                cmd.Parameters.AddWithValue("@dataJulgamento", processo.DataJulgamento);
+                cmd.Parameters.AddWithValue("@valorAcao", processo.ValorAcao);
+                cmd.Parameters.AddWithValue("@descricao", processo.Descricao);
+
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public void DeletarProcesso(int numeroProcesso)
+        {
+            string sql = string.Empty;
+
+            try
+            {
+                sql = @"delete from processo where Numero = @numero";
+                SqlCommand cmd = new SqlCommand(sql, Conn);
+
+                cmd.Parameters.AddWithValue("@numero", numeroProcesso);
+
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+>>>>>>> funcionalidade_filtrar
     }
 }
