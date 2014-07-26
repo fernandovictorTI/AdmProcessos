@@ -11,7 +11,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div class="container-fluid">
+        <div class="container">
             <br />
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -27,7 +27,7 @@
                         </div>
                         <div class="form-group">
                             <label>Número</label>
-                            <asp:TextBox ID="txtNumero" runat="server" CssClass="form-control"></asp:TextBox>
+                            <asp:TextBox ID="txtNumero" runat="server" CssClass="form-control" Enabled="false"></asp:TextBox>
                         </div>
                         <div class="form-group">
                             <label>Categoria</label><br />

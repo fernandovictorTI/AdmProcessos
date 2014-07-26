@@ -7,7 +7,7 @@ namespace Entidade
 {
     public class Processo
     {
-        public int Numero { get; set; }
+        public int? Numero { get; set; }
         public int Categoria { get; set; }
         public string DescricaoCategoria { get; set; }
         public int Interessado { get; set; }

@@ -1,6 +1,7 @@
 ﻿using DataAccess;
 using Entidade;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -37,13 +38,39 @@ namespace Business
             daCadastrarProcesso.Cadastrar(processo);
         }
 
-        public List<Processo> ListarProcessos()
+        public List<Processo> ListarProcessos(Hashtable ht)
         {
             ConexaoBancoDados conexao = new ConexaoBancoDados();
 
             var conn = conexao.AbrirConnexao();
             DaCadastrarProcesso daCadastrarProcesso = new DaCadastrarProcesso(conn);
-            return daCadastrarProcesso.ListarProcessos();
+            return daCadastrarProcesso.ListarProcessos(ht);
+        }
+
+        public Processo RetornarProcesso(int numero)
+        {
+            ConexaoBancoDados conexao = new ConexaoBancoDados();
+            var conn = conexao.AbrirConnexao();
+            DaCadastrarProcesso daCadastrarProcesso = new DaCadastrarProcesso(conn);
+            return daCadastrarProcesso.RetornarProcesso(numero);
+        }
+
+        public void AlterarProcesso(Processo processo)
+        {
+            ConexaoBancoDados conexao = new ConexaoBancoDados();
+
+            var conn = conexao.AbrirConnexao();
+            DaCadastrarProcesso daCadastrarProcesso = new DaCadastrarProcesso(conn);
+            daCadastrarProcesso.Alterar(processo);
+        }
+
+        public void DeletarProcesso(int numeroProcesso)
+        {
+            ConexaoBancoDados conexao = new ConexaoBancoDados();
+
+            var conn = conexao.AbrirConnexao();
+            DaCadastrarProcesso daCadastrarProcesso = new DaCadastrarProcesso(conn);
+            daCadastrarProcesso.DeletarProcesso(numeroProcesso);
         }
     }
 }

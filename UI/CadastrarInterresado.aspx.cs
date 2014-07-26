@@ -13,7 +13,10 @@ namespace ProvaAdmProcessos
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                this.CarregarCampos();
+            }
         }
 
         #region Eventos
@@ -24,14 +27,27 @@ namespace ProvaAdmProcessos
             {
                 if (this.ValidarCampos() == 0)
                 {
+                    int? num = null;
+
                     Interessado interessado = new Interessado();
+                    interessado.Id = txtId.Text != string.Empty ? Convert.ToInt32(txtId.Text) : num;
                     interessado.Nome = txtNome.Text;
                     interessado.CPF = txtCpf.Text;
                     interessado.Contato = txtContato.Text;
                     interessado.Endereco = txtEndereco.Text;
 
                     BusCadastrarInteressado bus = new BusCadastrarInteressado();
-                    bus.CadastrarInteressado(interessado);
+
+                    if (interessado.Id == null)
+                    {
+                        bus.CadastrarInteressado(interessado);
+                    }
+                    else
+                    {
+                        bus.AlterarInteressado(interessado);
+                    }
+
+                    this.CarregarCampos();
 
                     calSucces.Visible = true;
                     calDanger.Visible = false;
@@ -69,6 +85,45 @@ namespace ProvaAdmProcessos
             return contErro;
         }
 
+        public void CarregarCampos()
+        {
+            this.CarregarGridInterresado();
+        }
+
+        private void CarregarGridInterresado()
+        {
+            List<Interessado> lstInteressado = new List<Interessado>();
+            lstInteressado = new BusCadastrarInteressado().ListarInteressados();
+            gvInteressado.DataSource = lstInteressado;
+            gvInteressado.DataBind();
+        }
+
         #endregion
+
+        protected void gvInteressado_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            int id = 0;
+            switch (e.CommandName)
+            {
+                case "Editar":
+                    id = Convert.ToInt32(e.CommandArgument);
+                    Interessado interessado = new Interessado();
+                    interessado = new BusCadastrarInteressado().BuscarInteressado(id);
+
+                    txtId.Text = interessado.Id.ToString();
+                    txtNome.Text = interessado.Nome;
+                    txtCpf.Text = interessado.CPF;
+                    txtEndereco.Text = interessado.Endereco;
+                    txtContato.Text = interessado.Contato;
+
+                    break;
+
+                case "Excluir":
+                    id = Convert.ToInt32(e.CommandArgument);
+                    new BusCadastrarInteressado().DeletarInteressado(id);
+                    CarregarGridInterresado();
+                    break;
+            }
+        }
     }
 }
